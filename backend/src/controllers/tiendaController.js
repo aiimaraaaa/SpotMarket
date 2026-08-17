@@ -1,3 +1,4 @@
+
 import { Tienda, Usuario, Producto } from '../models/index.js';
 import { Op } from 'sequelize';
 
@@ -9,7 +10,6 @@ export async function obtenerTiendas(req, res) {
     try {
         const { categoria, busqueda } = req.query;
         const filtro = {};
-
 
         if (categoria && categoria !== 'todas') {
             if (!CATEGORIAS_PERMITIDAS.includes(categoria)) {
@@ -39,6 +39,7 @@ export async function obtenerTiendas(req, res) {
     }
 }
 
+
 export async function obtenerTiendaPorId(req, res) {
     try {
         const tienda = await Tienda.findByPk(req.params.id, {
@@ -59,6 +60,7 @@ export async function obtenerTiendaPorId(req, res) {
     }
 }
 
+
 export async function crearTienda(req, res) {
     try {
         const { nombre, categoria, direccion, descripcion, whatsapp, latitud, longitud, logo, usuarioId } = req.body;
@@ -67,7 +69,6 @@ export async function crearTienda(req, res) {
         if (!nombre || !categoria || !direccion || !usuarioId) {
             return res.status(400).json({ error: 'Nombre, categoría, dirección y usuario son obligatorios' });
         }
-
 
         if (!CATEGORIAS_PERMITIDAS.includes(categoria)) {
             return res.status(400).json({ error: 'Categoría no válida. Solo alimentos: carniceria, verduleria, fruteria, lacteos, panaderia, bebidas, infusiones, almacen' });
@@ -79,10 +80,12 @@ export async function crearTienda(req, res) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
 
+
         const tiendaExistente = await Tienda.findOne({ where: { usuarioId } });
         if (tiendaExistente) {
             return res.status(400).json({ error: 'Este usuario ya tiene una tienda registrada' });
         }
+
 
         const tienda = await Tienda.create({
             nombre,

@@ -1,3 +1,4 @@
+// Controlador de productos
 import { Producto, Tienda, Categoria } from '../models/index.js';
 import { Op } from 'sequelize';
 
@@ -17,7 +18,6 @@ export async function obtenerProductos(req, res) {
             }
             filtro.categoria = categoria;
         }
-
 
         if (busqueda) {
             filtro.nombre = { [Op.like]: `%${busqueda}%` };
@@ -87,7 +87,6 @@ export async function crearProducto(req, res) {
             return res.status(400).json({ error: 'Nombre, precio, categoría y tienda son obligatorios' });
         }
 
-
         if (!CATEGORIAS_PERMITIDAS.includes(categoria)) {
             return res.status(400).json({ error: 'Categoría no válida. Solo alimentos: carnes, verduras, frutas, lacteos, panaderia, bebidas, infusiones, secos, conservas, huevos, almacen' });
         }
@@ -131,6 +130,7 @@ export async function actualizarProducto(req, res) {
 
         const { nombre, precio, categoria, descripcion, imagen } = req.body;
 
+        // Validar categoría si se envía
         if (categoria && !CATEGORIAS_PERMITIDAS.includes(categoria)) {
             return res.status(400).json({ error: 'Categoría no válida. Solo alimentos.' });
         }
@@ -182,6 +182,7 @@ export async function darMeGusta(req, res) {
         res.status(500).json({ error: 'No se pudo registrar el "me gusta"' });
     }
 }
+
 
 
 export async function darNoMeGusta(req, res) {
