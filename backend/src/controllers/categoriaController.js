@@ -1,3 +1,4 @@
+//categorias 
 import { Categoria, Producto } from '../models/index.js';
 
 
