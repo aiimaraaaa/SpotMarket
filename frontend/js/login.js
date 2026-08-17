@@ -1,5 +1,7 @@
 const loginForm = document.getElementById("formLogin");
-const loginMsg = document.getElementById("formMsg");
+const loginMsg = document.getElementById("loginMsg");
+const regForm = document.getElementById("formRegistro");
+const regMsg = document.getElementById("regMsg");
 const sesionActual = document.getElementById("sesionActual");
 
 function mostrarMensaje(elemento, texto, tipo) {
@@ -12,7 +14,7 @@ function mostrarSesion() {
   if (!sesionActual) return;
   const sesion = localStorage.getItem("spotmarket_sesion");
   sesionActual.textContent = sesion
-    ? `Sesión activa como: ${sesion}`
+    ? `✅ Sesión activa como: ${sesion}`
     : "No hay ninguna sesión activa.";
 }
 
@@ -52,9 +54,6 @@ if (loginForm) {
     }
   });
 }
-
-const regForm = document.getElementById("formRegistro");
-const regMsg = document.getElementById("regMsg");
 
 if (regForm) {
   regForm.addEventListener("submit", async (e) => {
@@ -97,13 +96,17 @@ if (regForm) {
       );
       regForm.reset();
 
-      // Cambiar a la pestaña de login después de 2 segundos
       setTimeout(() => {
         const loginTab = document.getElementById("login-tab");
         if (loginTab) {
           const tab = new bootstrap.Tab(loginTab);
           tab.show();
         }
+
+        setTimeout(() => {
+          loginMsg.textContent = "";
+          loginMsg.className = "form-msg";
+        }, 500);
       }, 2000);
     } catch (error) {
       mostrarMensaje(regMsg, error.message || "Error al registrarse", "error");
@@ -111,5 +114,4 @@ if (regForm) {
   });
 }
 
-// Mostrar sesión al cargar
 mostrarSesion();

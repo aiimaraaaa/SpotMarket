@@ -1,25 +1,29 @@
-.login-page {
-    display: flex;
-    justify-content: center;
-    padding: 64px 24px;
+.forgot-link {
+    font-size: 0.85rem;
+    color: var(--color-accent);
+    text-decoration: none;
 }
 
-.login-card {
-    width: 100%;
-    max-width: 380px;
+.forgot-link:hover {
+    text-decoration: underline;
+    color: var(--color-accent-dark);
 }
 
-.login-card__nota {
-    font-size: 0.82rem;
+
+.nav-pills .nav-link {
+    border-radius: 30px !important;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+    color: var(--color-ink-muted);
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+.nav-pills .nav-link:hover {
     background: var(--color-bg-alt);
-    border-radius: var(--radius-sm);
-    padding: 10px 12px;
-    margin: 12px 0 20px;
 }
 
-.login-card__sesion {
-    margin-top: 16px;
-    font-size: 0.82rem;
-    text-align: center;
-    color: var(--color-ink-soft);
+.nav-pills .nav-link.active {
+    background: var(--color-accent) !important;
+    color: #fff !important;
 }
