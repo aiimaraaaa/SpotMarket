@@ -27,14 +27,21 @@ app.get("/api/health", (req, res) => {
   res.json({ ok: true, mensaje: "SpotMarket API funcionando" });
 });
 
+// INICIAR SERVIDOR
+
 async function iniciarServidor() {
   try {
+    // Conectar a la base de datos
+    console.log(" Conectando a MySQL...");
     await conexion.authenticate();
     console.log(" Conexión a MySQL exitosa");
 
+    // Sincronizar modelos con la base de datos
+    console.log(" Sincronizando modelos...");
     await conexion.sync({ alter: true });
     console.log(" Modelos sincronizados");
 
+    // Levantar el servidor
     app.listen(PUERTO, () => {
       console.log(` Servidor corriendo en http://localhost:${PUERTO}`);
       console.log("\n Endpoints disponibles:");
@@ -51,8 +58,12 @@ async function iniciarServidor() {
       console.log("   GET    /api/health");
     });
   } catch (error) {
-    console.error(" Error al iniciar el servidor:", error.message);
+    console.error(" Error al iniciar el servidor:");
+    console.error("   Mensaje:", error.message);
+    console.error("   Detalle:", error);
+    console.error("   Stack:", error.stack);
   }
 }
 
+// Ejecutar
 iniciarServidor();
