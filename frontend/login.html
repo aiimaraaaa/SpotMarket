@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ingresar — SpotMarket</title>
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/login.css" />
+  </head>
+  <body>
+    <!--  HEADER  -->
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="index.html" class="brand">
+          <span class="brand__mark">SpotMarket</span>
+          <span class="brand__tag">Formosa Capital</span>
+        </a>
+        <nav class="nav">
+          <a href="index.html">Inicio</a>
+          <a href="mapa.html">Mapa</a>
+          <a href="registro.html">Registrar tienda</a>
+          <a href="registro-producto.html">Subir producto</a>
+          <a href="login.html" class="is-active">Ingresar</a>
+        </nav>
+      </div>
+    </header>
+
+    <!--  CONTENIDO PRINCIPAL  -->
+    <main class="login-page">
+      <!-- Login -->
+      <form id="formLogin" class="card-form login-card">
+        <p class="page__eyebrow">Bienvenido de vuelta</p>
+        <h1>Ingresar</h1>
+        <p class="login-card__nota">
+          Ingresá con tu email y contraseña para acceder a tu cuenta.
+        </p>
+
+        <p id="formMsg" class="form-msg"></p>
+
+        <div class="field">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" required placeholder="tu@correo.com" />
+        </div>
+
+        <div class="field">
+          <label for="clave">Contraseña</label>
+          <input type="password" id="clave" required placeholder="••••••••" />
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--block">
+          Ingresar
+        </button>
+
+        <p class="login-card__sesion" id="sesionActual"></p>
+      </form>
+
+      <!-- Registro -->
+      <hr style="margin: 24px 0; border-color: var(--color-border)" />
+
+      <form id="formRegistro" class="card-form login-card">
+        <p class="page__eyebrow">¿Sos nuevo?</p>
+        <h1>Crear cuenta</h1>
+
+        <p id="regMsg" class="form-msg"></p>
+
+        <div class="field">
+          <label for="regNombre">Nombre completo</label>
+          <input type="text" id="regNombre" required placeholder="Tu nombre" />
+        </div>
+
+        <div class="field">
+          <label for="regEmail">Correo electrónico</label>
+          <input
+            type="email"
+            id="regEmail"
+            required
+            placeholder="tu@correo.com"
+          />
+        </div>
+
+        <div class="field">
+          <label for="regPassword">Contraseña</label>
+          <input
+            type="password"
+            id="regPassword"
+            required
+            placeholder="Mínimo 6 caracteres"
+            minlength="6"
+          />
+        </div>
+
+        <div class="field">
+          <label for="regRole">Tipo de cuenta</label>
+          <select id="regRole">
+            <option value="cliente">Cliente (compro productos)</option>
+            <option value="comercio">Comercio (vendo productos)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--block">
+          Crear cuenta
+        </button>
+      </form>
+    </main>
+
+    <!--  FOOTER -->
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <span>SpotMarket · Formosa Capital</span>
+        <span><a href="index.html">Volver al catálogo</a></span>
+      </div>
+    </footer>
+
+    <script src="js/common.js"></script>
+    <script src="js/login.js"></script>
+  </body>
+</html>
