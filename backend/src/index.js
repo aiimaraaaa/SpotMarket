@@ -1,13 +1,17 @@
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import { conexion } from "./models/index.js";
 
-// Importar rutas
 import authRoutes from "./routes/authRoutes.js";
 import perfilRoutes from "./routes/perfilRoutes.js";
 import tiendaRoutes from "./routes/tiendaRoutes.js";
 import productoRoutes from "./routes/productoRoutes.js";
 import categoriaRoutes from "./routes/categoriaRoutes.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -16,6 +20,8 @@ const PUERTO = process.env.PUERTO || 4004;
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
+
+app.use(express.static(path.join(__dirname, "../../frontend")));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/perfiles", perfilRoutes);
@@ -27,23 +33,21 @@ app.get("/api/health", (req, res) => {
   res.json({ ok: true, mensaje: "SpotMarket API funcionando" });
 });
 
-// INICIAR SERVIDOR
-
 async function iniciarServidor() {
   try {
-    // Conectar a la base de datos
-    console.log(" Conectando a MySQL...");
+    console.log("🔄 Conectando a MySQL...");
     await conexion.authenticate();
-    console.log(" Conexión a MySQL exitosa");
+    console.log("✅ Conexión a MySQL exitosa");
 
-    // Sincronizar modelos con la base de datos
-    console.log(" Sincronizando modelos...");
+    console.log("🔄 Sincronizando modelos...");
     await conexion.sync({ alter: true });
-    console.log(" Modelos sincronizados");
+    console.log("✅ Modelos sincronizados");
 
-    // Levantar el servidor
     app.listen(PUERTO, () => {
       console.log(` Servidor corriendo en http://localhost:${PUERTO}`);
+      console.log(
+        ` Frontend disponible en http://localhost:${PUERTO}/login.html`,
+      );
       console.log("\n Endpoints disponibles:");
       console.log("   POST   /api/auth/registro");
       console.log("   POST   /api/auth/login");
@@ -65,5 +69,4 @@ async function iniciarServidor() {
   }
 }
 
-// Ejecutar
 iniciarServidor();
