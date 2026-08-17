@@ -1,0 +1,31 @@
+.registro-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+@media (min-width: 860px) {
+    .registro-layout {
+        grid-template-columns: minmax(0, 420px) 1fr;
+        align-items: start;
+    }
+}
+
+.mapa-picker {
+    position: sticky;
+    top: 90px;
+}
+
+.mapa-picker__mapa {
+    height: 420px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+}
+
+.mapa-picker__coords {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-ink-soft);
+}

@@ -1,0 +1,25 @@
+.login-page {
+    display: flex;
+    justify-content: center;
+    padding: 64px 24px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 380px;
+}
+
+.login-card__nota {
+    font-size: 0.82rem;
+    background: var(--color-bg-alt);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    margin: 12px 0 20px;
+}
+
+.login-card__sesion {
+    margin-top: 16px;
+    font-size: 0.82rem;
+    text-align: center;
+    color: var(--color-ink-soft);
+}
