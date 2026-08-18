@@ -1,3 +1,4 @@
+// LOGIN — Lógia de login y registro
 const loginForm = document.getElementById("formLogin");
 const loginMsg = document.getElementById("loginMsg");
 const regForm = document.getElementById("formRegistro");
@@ -97,12 +98,11 @@ if (regForm) {
       regForm.reset();
 
       setTimeout(() => {
-        const loginTab = document.getElementById("login-tab");
+        const loginTab = document.getElementById("pills-login-tab");
         if (loginTab) {
           const tab = new bootstrap.Tab(loginTab);
           tab.show();
         }
-
         setTimeout(() => {
           loginMsg.textContent = "";
           loginMsg.className = "form-msg";
