@@ -1,15 +1,15 @@
 const CATEGORIA_LABEL = {
-  carnes: "🥩 Carnes",
-  verduras: "🥦 Verduras",
-  frutas: "🍎 Frutas",
-  lacteos: "🥛 Lácteos",
-  panaderia: "🍞 Panadería",
-  bebidas: "🧃 Bebidas",
-  infusiones: "🧉 Infusiones",
-  secos: "🌾 Secos y granos",
-  conservas: "🥫 Conservas",
-  huevos: "🥚 Huevos",
-  almacen: "🛒 Almacén",
+  carnes: " Carnes",
+  verduras: " Verduras",
+  frutas: " Frutas",
+  lacteos: " Lácteos",
+  panaderia: " Panadería",
+  bebidas: " Bebidas",
+  infusiones: " Infusiones",
+  secos: " Secos y granos",
+  conservas: " Conservas",
+  huevos: " Huevos",
+  almacen: " Almacén",
 };
 
 async function cargarTiendas() {
@@ -104,7 +104,7 @@ if (form) {
       });
 
       mostrarMensaje(
-        "✅ ¡Producto publicado! Ya se ve en el catálogo.",
+        " ¡Producto publicado! Ya se ve en el catálogo.",
         "success",
       );
       form.reset();

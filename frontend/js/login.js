@@ -15,7 +15,7 @@ function mostrarSesion() {
   if (!sesionActual) return;
   const sesion = localStorage.getItem("spotmarket_sesion");
   sesionActual.textContent = sesion
-    ? `✅ Sesión activa como: ${sesion}`
+    ? ` Sesión activa como: ${sesion}`
     : "No hay ninguna sesión activa.";
 }
 
@@ -40,7 +40,7 @@ if (loginForm) {
       localStorage.setItem("spotmarket_sesion", data.nombre);
       localStorage.setItem("spotmarket_user", JSON.stringify(data));
 
-      mostrarMensaje(loginMsg, `✅ ¡Bienvenido/a ${data.nombre}!`, "success");
+      mostrarMensaje(loginMsg, ` ¡Bienvenido/a ${data.nombre}!`, "success");
       mostrarSesion();
 
       setTimeout(() => {
@@ -92,7 +92,7 @@ if (regForm) {
 
       mostrarMensaje(
         regMsg,
-        "✅ Cuenta creada. ¡Ya podés iniciar sesión!",
+        " Cuenta creada. ¡Ya podés iniciar sesión!",
         "success",
       );
       regForm.reset();

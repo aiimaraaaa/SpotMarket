@@ -15,17 +15,17 @@ const CATEGORIAS = [
 
 const CATEGORIA_LABEL = {
   todas: "Todas",
-  carnes: "🥩 Carnes",
-  verduras: "🥦 Verduras",
-  frutas: "🍎 Frutas",
-  lacteos: "🥛 Lácteos",
-  panaderia: "🍞 Panadería",
-  bebidas: "🧃 Bebidas",
-  infusiones: "🧉 Infusiones",
-  secos: "🌾 Secos y granos",
-  conservas: "🥫 Conservas",
-  huevos: "🥚 Huevos",
-  almacen: "🛒 Almacén",
+  carnes: " Carnes",
+  verduras: " Verduras",
+  frutas: " Frutas",
+  lacteos: " Lácteos",
+  panaderia: " Panadería",
+  bebidas: " Bebidas",
+  infusiones: " Infusiones",
+  secos: " Secos y granos",
+  conservas: " Conservas",
+  huevos: " Huevos",
+  almacen: " Almacén",
 };
 
 let categoriaActiva = "todas";
@@ -38,7 +38,7 @@ const chipsContainer = document.getElementById("categoriaChips");
 const WHATSAPP_NUMBER = "5493704000000";
 const whatsappFab = document.getElementById("whatsappFab");
 if (whatsappFab) {
-  whatsappFab.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, te vi en SpotMarket 👋")}`;
+  whatsappFab.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, te vi en SpotMarket ")}`;
 }
 
 function renderChips() {

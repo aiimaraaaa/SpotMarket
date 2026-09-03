@@ -12,14 +12,14 @@ const CATEGORIAS_TIENDAS = [
 
 const CATEGORIA_TIENDA_LABEL = {
   todas: "Todas",
-  carniceria: "🥩 Carnicería",
-  verduleria: "🥦 Verdulería",
-  fruteria: "🍎 Frutería",
-  lacteos: "🥛 Lácteos",
-  panaderia: "🍞 Panadería",
-  bebidas: "🧃 Bebidas",
-  infusiones: "🧉 Infusiones",
-  almacen: "🛒 Almacén",
+  carniceria: " Carnicería",
+  verduleria: " Verdulería",
+  fruteria: " Frutería",
+  lacteos: " Lácteos",
+  panaderia: " Panadería",
+  bebidas: " Bebidas",
+  infusiones: " Infusiones",
+  almacen: " Almacén",
 };
 
 const WHATSAPP_NUMBER = "5493704000000";
