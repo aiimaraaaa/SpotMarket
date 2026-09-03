@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/aiimaraaaa/SpotMarket/issues"
   },
-  "homepage": "https://github.com/aiimaraaaa/SpotMarket#readme"
+  "homepage": "https://github.com/aiimaraaaa/SpotMarket#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "express-validator": "^7.3.2",
+    "jsonwebtoken": "^9.0.3"
+  }
 }
