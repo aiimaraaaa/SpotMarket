@@ -26,13 +26,14 @@ const Usuario = conexion.define(
       allowNull: false,
     },
     rol: {
-      type: DataTypes.ENUM("cliente", "comercio"),
+      type: DataTypes.ENUM("cliente", "comercio", "admin"),
       defaultValue: "cliente",
     },
   },
   {
     tableName: "usuarios",
     timestamps: true,
+    paranoid: true,
   },
 );
 

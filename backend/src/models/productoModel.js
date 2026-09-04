@@ -54,10 +54,23 @@ const Producto = conexion.define(
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    en_oferta: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    stock: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    es_saludable: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   {
     tableName: "productos",
     timestamps: true,
+    paranoid: true,
   },
 );
 
