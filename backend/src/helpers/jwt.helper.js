@@ -1,10 +1,5 @@
-// ============================================================
-// HELPERS PARA JWT
-// ============================================================
-
 import jwt from "jsonwebtoken";
 
-// Generar token JWT
 export const generateToken = (payload) => {
   try {
     return jwt.sign(payload, process.env.JWT_SECRET, {
@@ -15,7 +10,6 @@ export const generateToken = (payload) => {
   }
 };
 
-// Verificar token JWT
 export const verifyToken = (token) => {
   try {
     return jwt.verify(token, process.env.JWT_SECRET);

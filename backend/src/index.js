@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import { conexion } from "./models/index.js";
 
 import authRoutes from "./routes/authRoutes.js";
@@ -20,6 +21,7 @@ const PUERTO = process.env.PUERTO || 4004;
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
+app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, "../../frontend")));
 
@@ -35,37 +37,14 @@ app.get("/api/health", (req, res) => {
 
 async function iniciarServidor() {
   try {
-    console.log("🔄 Conectando a MySQL...");
     await conexion.authenticate();
-    console.log("✅ Conexión a MySQL exitosa");
-
-    console.log("🔄 Sincronizando modelos...");
     await conexion.sync({ alter: true });
-    console.log("✅ Modelos sincronizados");
 
     app.listen(PUERTO, () => {
-      console.log(` Servidor corriendo en http://localhost:${PUERTO}`);
-      console.log(
-        ` Frontend disponible en http://localhost:${PUERTO}/login.html`,
-      );
-      console.log("\n Endpoints disponibles:");
-      console.log("   POST   /api/auth/registro");
-      console.log("   POST   /api/auth/login");
-      console.log("   GET    /api/perfiles");
-      console.log("   POST   /api/perfiles");
-      console.log("   GET    /api/tiendas");
-      console.log("   POST   /api/tiendas");
-      console.log("   GET    /api/productos");
-      console.log("   POST   /api/productos");
-      console.log("   GET    /api/categorias");
-      console.log("   POST   /api/categorias");
-      console.log("   GET    /api/health");
+      console.log(`Servidor corriendo en el puerto${PUERTO}`);
     });
   } catch (error) {
-    console.error(" Error al iniciar el servidor:");
-    console.error("   Mensaje:", error.message);
-    console.error("   Detalle:", error);
-    console.error("   Stack:", error.stack);
+    console.error("Error al iniciar el servidor:", error.message);
   }
 }
 

@@ -1,7 +1,3 @@
-// ============================================================
-// CONTROLADOR DE AUTENTICACIÓN
-// ============================================================
-
 import { Usuario } from "../models/index.js";
 import { hashPassword, comparePassword } from "../helpers/bcrypt.helper.js";
 import { generateToken } from "../helpers/jwt.helper.js";
@@ -87,15 +83,5 @@ export async function iniciarSesion(req, res) {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "No se pudo iniciar sesión" });
-  }
-}
-
-export async function cerrarSesion(req, res) {
-  try {
-    res.clearCookie("token");
-    res.json({ mensaje: "Sesión cerrada exitosamente" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "No se pudo cerrar la sesión" });
   }
 }
