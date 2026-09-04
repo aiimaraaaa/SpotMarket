@@ -41,7 +41,7 @@ async function iniciarServidor() {
     await conexion.sync({ alter: true });
 
     app.listen(PUERTO, () => {
-      console.log(`Servidor corriendo en el puerto${PUERTO}`);
+      console.log(`Servidor corriendo en el puerto ${PUERTO}`);
     });
   } catch (error) {
     console.error("Error al iniciar el servidor:", error.message);
