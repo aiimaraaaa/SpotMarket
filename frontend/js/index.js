@@ -15,17 +15,17 @@ const CATEGORIAS = [
 
 const CATEGORIA_LABEL = {
   todas: "Todas",
-  carnes: " Carnes",
-  verduras: " Verduras",
-  frutas: " Frutas",
-  lacteos: " Lácteos",
-  panaderia: " Panadería",
-  bebidas: " Bebidas",
-  infusiones: " Infusiones",
-  secos: " Secos y granos",
-  conservas: " Conservas",
-  huevos: " Huevos",
-  almacen: " Almacén",
+  carnes: "Carnes",
+  verduras: "Verduras",
+  frutas: "Frutas",
+  lacteos: "Lácteos",
+  panaderia: "Panadería",
+  bebidas: "Bebidas",
+  infusiones: "Infusiones",
+  secos: "Secos y granos",
+  conservas: "Conservas",
+  huevos: "Huevos",
+  almacen: "Almacén",
 };
 
 let categoriaActiva = "todas";
@@ -38,7 +38,7 @@ const chipsContainer = document.getElementById("categoriaChips");
 const WHATSAPP_NUMBER = "5493704000000";
 const whatsappFab = document.getElementById("whatsappFab");
 if (whatsappFab) {
-  whatsappFab.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, te vi en SpotMarket ")}`;
+  whatsappFab.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, te vi en SpotMarket 👋")}`;
 }
 
 function renderChips() {
@@ -119,17 +119,17 @@ function renderProductos(productos) {
     const card = document.createElement("article");
     card.className = "product-card";
     card.innerHTML = `
-            <img class="product-card__img" src="${producto.imagen || ""}" alt="${producto.nombre}">
-            <div class="product-card__body">
-                <span class="product-card__categoria">${producto.categoria || ""}</span>
-                <span class="product-card__nombre">${producto.nombre || ""}</span>
-                <span class="product-card__tienda">${producto.Tienda ? producto.Tienda.nombre : ""}</span>
-                <div class="product-card__footer">
-                    <span class="product-card__precio">${formatPrice(producto.precio || 0)}</span>
-                    <span class="product-card__likes">👍 ${producto.me_gusta || 0}</span>
-                </div>
-            </div>
-        `;
+                    <img class="product-card__img" src="${producto.imagen || ""}" alt="${producto.nombre}">
+                    <div class="product-card__body">
+                        <span class="product-card__categoria">${producto.categoria || ""}</span>
+                        <span class="product-card__nombre">${producto.nombre || ""}</span>
+                        <span class="product-card__tienda">${producto.Tienda ? producto.Tienda.nombre : ""}</span>
+                        <div class="product-card__footer">
+                            <span class="product-card__precio">${formatPrice(producto.precio || 0)}</span>
+                            <span class="product-card__likes">👍 ${producto.me_gusta || 0}</span>
+                        </div>
+                    </div>
+                `;
     card.addEventListener("click", () => abrirModal(producto));
     grid.appendChild(card);
   });
