@@ -1,4 +1,3 @@
-// LOGIN — Lógia de login y registro
 const loginForm = document.getElementById("formLogin");
 const loginMsg = document.getElementById("loginMsg");
 const regForm = document.getElementById("formRegistro");
@@ -15,7 +14,7 @@ function mostrarSesion() {
   if (!sesionActual) return;
   const sesion = localStorage.getItem("spotmarket_sesion");
   sesionActual.textContent = sesion
-    ? ` Sesión activa como: ${sesion}`
+    ? `Sesión activa como: ${sesion}`
     : "No hay ninguna sesión activa.";
 }
 
@@ -40,11 +39,20 @@ if (loginForm) {
       localStorage.setItem("spotmarket_sesion", data.nombre);
       localStorage.setItem("spotmarket_user", JSON.stringify(data));
 
-      mostrarMensaje(loginMsg, ` ¡Bienvenido/a ${data.nombre}!`, "success");
+      mostrarMensaje(loginMsg, `✅ ¡Bienvenido/a ${data.nombre}!`, "success");
       mostrarSesion();
 
       setTimeout(() => {
-        window.location.href = "index.html";
+        switch (data.rol) {
+          case "admin":
+            window.location.href = "admin.html";
+            break;
+          case "comercio":
+            window.location.href = "comercio.html";
+            break;
+          default:
+            window.location.href = "index.html";
+        }
       }, 1500);
     } catch (error) {
       mostrarMensaje(
@@ -92,7 +100,7 @@ if (regForm) {
 
       mostrarMensaje(
         regMsg,
-        " Cuenta creada. ¡Ya podés iniciar sesión!",
+        "Cuenta creada. ¡Ya podés iniciar sesión!",
         "success",
       );
       regForm.reset();

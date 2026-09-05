@@ -6,6 +6,7 @@ async function apiFetch(endpoint, options = {}) {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       ...options,
     });
 
