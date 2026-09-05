@@ -4,13 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panel Admin — SpotMarket</title>
-    <link rel="stylesheet" href="css/base.css" />
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
+
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/admin.css" />
   </head>
   <body>
     <header class="site-header">
@@ -28,10 +31,328 @@
     </header>
 
     <main class="container page">
-      <h1>Panel de Administración</h1>
-      <p>Bienvenido, <strong id="nombreAdmin"></strong>.</p>
-      <p>Acá podrás gestionar usuarios, tiendas y productos.</p>
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h1>Panel de Administración</h1>
+          <p>Bienvenido, <strong id="nombreAdmin"></strong>.</p>
+        </div>
+        <button class="btn btn-success" onclick="cargarTodosLosDatos()">
+          Actualizar
+        </button>
+      </div>
+
+      <!-- SECCIÓN: USUARIOS -->
+
+      <section class="admin-section">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2>Usuarios</h2>
+          <button
+            class="btn btn-success btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#modalUsuario"
+          >
+            + Nuevo usuario
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-admin table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tablaUsuarios">
+              <tr>
+                <td colspan="5" class="text-center">Cargando usuarios...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECCIÓN: TIENDAS -->
+
+      <section class="admin-section">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2>Tiendas</h2>
+          <button
+            class="btn btn-success btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#modalTienda"
+          >
+            + Nueva tienda
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-admin table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Dueño</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tablaTiendas">
+              <tr>
+                <td colspan="5" class="text-center">Cargando tiendas...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECCIÓN: PRODUCTOS -->
+
+      <section class="admin-section">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2>Productos</h2>
+          <button
+            class="btn btn-success btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#modalProducto"
+          >
+            + Nuevo producto
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-admin table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Tienda</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tablaProductos">
+              <tr>
+                <td colspan="6" class="text-center">Cargando productos...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </main>
+
+    <!-- MODALES PARA CREAR/EDITAR -->
+
+    <!-- Modal Usuario -->
+    <div class="modal fade" id="modalUsuario" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Nuevo Usuario</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formUsuario">
+              <input type="hidden" id="usuarioId" />
+              <div class="mb-2">
+                <label>Nombre</label>
+                <input type="text" id="uNombre" class="form-control" required />
+              </div>
+              <div class="mb-2">
+                <label>Email</label>
+                <input type="email" id="uEmail" class="form-control" required />
+              </div>
+              <div class="mb-2">
+                <label>Contraseña</label>
+                <input
+                  type="password"
+                  id="uPassword"
+                  class="form-control"
+                  placeholder="Mínimo 6 caracteres"
+                />
+              </div>
+              <div class="mb-2">
+                <label>Rol</label>
+                <select id="uRol" class="form-select">
+                  <option value="cliente">Cliente</option>
+                  <option value="comercio">Comercio</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              onclick="guardarUsuario()"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Tienda -->
+    <div class="modal fade" id="modalTienda" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Nueva Tienda</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formTienda">
+              <input type="hidden" id="tiendaId" />
+              <div class="mb-2">
+                <label>Nombre</label>
+                <input type="text" id="tNombre" class="form-control" required />
+              </div>
+              <div class="mb-2">
+                <label>Categoría</label>
+                <select id="tCategoria" class="form-select">
+                  <option value="carniceria">Carnicería</option>
+                  <option value="verduleria">Verdulería</option>
+                  <option value="fruteria">Frutería</option>
+                  <option value="lacteos">Lácteos</option>
+                  <option value="panaderia">Panadería</option>
+                  <option value="bebidas">Bebidas</option>
+                  <option value="infusiones">Infusiones</option>
+                  <option value="almacen">Almacén</option>
+                </select>
+              </div>
+              <div class="mb-2">
+                <label>Dirección</label>
+                <input
+                  type="text"
+                  id="tDireccion"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="mb-2">
+                <label>ID del Usuario (dueño)</label>
+                <input
+                  type="number"
+                  id="tUsuarioId"
+                  class="form-control"
+                  required
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              onclick="guardarTienda()"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Producto -->
+    <div class="modal fade" id="modalProducto" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Nuevo Producto</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formProducto">
+              <input type="hidden" id="productoId" />
+              <div class="mb-2">
+                <label>Nombre</label>
+                <input type="text" id="pNombre" class="form-control" required />
+              </div>
+              <div class="mb-2">
+                <label>Precio</label>
+                <input
+                  type="number"
+                  id="pPrecio"
+                  class="form-control"
+                  step="0.01"
+                  required
+                />
+              </div>
+              <div class="mb-2">
+                <label>Categoría</label>
+                <select id="pCategoria" class="form-select">
+                  <option value="carnes">Carnes</option>
+                  <option value="verduras">Verduras</option>
+                  <option value="frutas">Frutas</option>
+                  <option value="lacteos">Lácteos</option>
+                  <option value="panaderia">Panadería</option>
+                  <option value="bebidas">Bebidas</option>
+                  <option value="infusiones">Infusiones</option>
+                  <option value="secos">Secos</option>
+                  <option value="conservas">Conservas</option>
+                  <option value="huevos">Huevos</option>
+                  <option value="almacen">Almacén</option>
+                </select>
+              </div>
+              <div class="mb-2">
+                <label>ID de la Tienda</label>
+                <input
+                  type="number"
+                  id="pTiendaId"
+                  class="form-control"
+                  required
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              onclick="guardarProducto()"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <footer class="site-footer">
       <div class="site-footer__inner">
@@ -43,9 +364,11 @@
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
-    ></script>
+    >
+      </script
 
-    <script src="js/common.js"></script>
+          <script src="js/common.js">
+    </script>
     <script src="js/admin.js"></script>
   </body>
 </html>

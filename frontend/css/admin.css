@@ -1,0 +1,91 @@
+.admin-section {
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    margin-bottom: 24px;
+    border: 1px solid var(--color-border);
+}
+
+.admin-section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+    color: var(--color-accent-dark);
+}
+
+.table-admin {
+    font-size: 0.9rem;
+}
+
+.table-admin th {
+    background: var(--color-bg-alt);
+}
+
+
+.badge-admin {
+    background: var(--color-accent);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+}
+
+.badge-comercio {
+    background: var(--color-gold);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+}
+
+.badge-cliente {
+    background: var(--color-ink-soft);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+}
+
+
+.btn-sm {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+}
+
+.btn-danger {
+    background: var(--color-error);
+    border: none;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #8a3a22;
+}
+
+.btn-warning {
+    background: var(--color-gold);
+    border: none;
+    color: #fff;
+}
+
+.btn-warning:hover {
+    background: #7a5e2a;
+}
+
+.btn-success {
+    background: var(--color-accent);
+    border: none;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background: var(--color-accent-dark);
+}
+
+.modal-content {
+    border-radius: var(--radius-md);
+}
+
+.modal-header {
+    background: var(--color-bg-alt);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
