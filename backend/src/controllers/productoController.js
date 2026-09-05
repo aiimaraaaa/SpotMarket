@@ -1,4 +1,3 @@
-// Controlador de productos
 import { Producto, Tienda, Categoria } from "../models/index.js";
 import { Op } from "sequelize";
 
@@ -24,12 +23,7 @@ export async function obtenerProductos(req, res) {
 
     if (categoria && categoria !== "todas") {
       if (!CATEGORIAS_PERMITIDAS.includes(categoria)) {
-        return res
-          .status(400)
-          .json({
-            error:
-              "Categoría no válida. Solo alimentos: carnes, verduras, frutas, lacteos, panaderia, bebidas, infusiones, secos, conservas, huevos, almacen",
-          });
+        return res.status(400).json({ error: "Categoría no válida" });
       }
       filtro.categoria = categoria;
     }
@@ -116,17 +110,19 @@ export async function crearProducto(req, res) {
     }
 
     if (!CATEGORIAS_PERMITIDAS.includes(categoria)) {
-      return res
-        .status(400)
-        .json({
-          error:
-            "Categoría no válida. Solo alimentos: carnes, verduras, frutas, lacteos, panaderia, bebidas, infusiones, secos, conservas, huevos, almacen",
-        });
+      return res.status(400).json({ error: "Categoría no válida" });
     }
 
     const tienda = await Tienda.findByPk(tiendaId);
     if (!tienda) {
       return res.status(404).json({ error: "Tienda no encontrada" });
+    }
+
+    // Verificar que el usuario sea el dueño de la tienda o admin
+    if (req.user.rol !== "admin" && req.user.id !== tienda.usuarioId) {
+      return res.status(403).json({
+        error: "No tienes permiso para crear productos en esta tienda",
+      });
     }
 
     const producto = await Producto.create({
@@ -159,13 +155,18 @@ export async function actualizarProducto(req, res) {
       return res.status(404).json({ error: "Producto no encontrado" });
     }
 
+    // Verificar que el usuario sea el dueño de la tienda o admin
+    const tienda = await Tienda.findByPk(producto.tiendaId);
+    if (req.user.rol !== "admin" && req.user.id !== tienda.usuarioId) {
+      return res
+        .status(403)
+        .json({ error: "No tienes permiso para actualizar este producto" });
+    }
+
     const { nombre, precio, categoria, descripcion, imagen } = req.body;
 
-    // Validar categoría si se envía
     if (categoria && !CATEGORIAS_PERMITIDAS.includes(categoria)) {
-      return res
-        .status(400)
-        .json({ error: "Categoría no válida. Solo alimentos." });
+      return res.status(400).json({ error: "Categoría no válida" });
     }
 
     await producto.update({
@@ -188,6 +189,14 @@ export async function eliminarProducto(req, res) {
     const producto = await Producto.findByPk(req.params.id);
     if (!producto) {
       return res.status(404).json({ error: "Producto no encontrado" });
+    }
+
+    // Verificar que el usuario sea el dueño de la tienda o admin
+    const tienda = await Tienda.findByPk(producto.tiendaId);
+    if (req.user.rol !== "admin" && req.user.id !== tienda.usuarioId) {
+      return res
+        .status(403)
+        .json({ error: "No tienes permiso para eliminar este producto" });
     }
 
     await producto.destroy();
