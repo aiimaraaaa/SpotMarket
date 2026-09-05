@@ -1,187 +1,51 @@
-import { Tienda, Usuario, Producto } from "../models/index.js";
-import { Op } from "sequelize";
+import express from "express";
+import {
+  obtenerTiendas,
+  obtenerTiendaPorId,
+  crearTienda,
+  actualizarTienda,
+  eliminarTienda,
+} from "../controllers/tiendaController.js";
+import {
+  validarCrearTienda,
+  validarTiendaId,
+} from "../middlewares/validations/tiendaValidation.js";
+import { validate } from "../middlewares/validate.js";
+import {
+  authMiddleware,
+  verificarRol,
+} from "../middlewares/auth.middleware.js";
 
-const CATEGORIAS_PERMITIDAS = [
-  "carniceria",
-  "verduleria",
-  "fruteria",
-  "lacteos",
-  "panaderia",
-  "bebidas",
-  "infusiones",
-  "almacen",
-];
+const router = express.Router();
 
-export async function obtenerTiendas(req, res) {
-  try {
-    const { categoria, busqueda } = req.query;
-    const filtro = {};
+router.get("/", obtenerTiendas);
+router.get("/:id", validarTiendaId, validate, obtenerTiendaPorId);
 
-    if (categoria && categoria !== "todas") {
-      if (!CATEGORIAS_PERMITIDAS.includes(categoria)) {
-        return res.status(400).json({ error: "Categoría no válida" });
-      }
-      filtro.categoria = categoria;
-    }
+router.post(
+  "/",
+  authMiddleware,
+  verificarRol(["comercio", "admin"]),
+  validarCrearTienda,
+  validate,
+  crearTienda,
+);
 
-    if (busqueda) {
-      filtro.nombre = { [Op.like]: `%${busqueda}%` };
-    }
+router.put(
+  "/:id",
+  authMiddleware,
+  verificarRol(["comercio", "admin"]),
+  validarTiendaId,
+  validate,
+  actualizarTienda,
+);
 
-    const tiendas = await Tienda.findAll({
-      where: filtro,
-      order: [["createdAt", "DESC"]],
-      include: [
-        { model: Usuario, attributes: ["id", "nombre", "email"] },
-        { model: Producto, attributes: ["id", "nombre", "precio"] },
-      ],
-    });
+router.delete(
+  "/:id",
+  authMiddleware,
+  verificarRol(["comercio", "admin"]),
+  validarTiendaId,
+  validate,
+  eliminarTienda,
+);
 
-    res.json(tiendas);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "No se pudieron obtener las tiendas" });
-  }
-}
-
-export async function obtenerTiendaPorId(req, res) {
-  try {
-    const tienda = await Tienda.findByPk(req.params.id, {
-      include: [
-        { model: Usuario, attributes: ["id", "nombre", "email"] },
-        { model: Producto, attributes: ["id", "nombre", "precio"] },
-      ],
-    });
-
-    if (!tienda) {
-      return res.status(404).json({ error: "Tienda no encontrada" });
-    }
-
-    res.json(tienda);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "No se pudo obtener la tienda" });
-  }
-}
-
-export async function crearTienda(req, res) {
-  try {
-    const {
-      nombre,
-      categoria,
-      direccion,
-      descripcion,
-      whatsapp,
-      latitud,
-      longitud,
-      logo,
-      usuarioId,
-    } = req.body;
-
-    if (!nombre || !categoria || !direccion || !usuarioId) {
-      return res.status(400).json({
-        error: "Nombre, categoría, dirección y usuario son obligatorios",
-      });
-    }
-
-    if (!CATEGORIAS_PERMITIDAS.includes(categoria)) {
-      return res.status(400).json({ error: "Categoría no válida" });
-    }
-
-    const usuario = await Usuario.findByPk(usuarioId);
-    if (!usuario) {
-      return res.status(404).json({ error: "Usuario no encontrado" });
-    }
-
-    const tiendaExistente = await Tienda.findOne({ where: { usuarioId } });
-    if (tiendaExistente) {
-      return res
-        .status(400)
-        .json({ error: "Este usuario ya tiene una tienda registrada" });
-    }
-
-    const tienda = await Tienda.create({
-      nombre,
-      categoria,
-      direccion,
-      descripcion,
-      whatsapp,
-      latitud,
-      longitud,
-      logo,
-      usuarioId,
-    });
-
-    res.status(201).json(tienda);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "No se pudo crear la tienda" });
-  }
-}
-
-export async function actualizarTienda(req, res) {
-  try {
-    const tienda = await Tienda.findByPk(req.params.id);
-    if (!tienda) {
-      return res.status(404).json({ error: "Tienda no encontrada" });
-    }
-
-    if (req.user.rol !== "admin" && req.user.id !== tienda.usuarioId) {
-      return res
-        .status(403)
-        .json({ error: "No tienes permiso para actualizar esta tienda" });
-    }
-
-    const {
-      nombre,
-      categoria,
-      direccion,
-      descripcion,
-      whatsapp,
-      latitud,
-      longitud,
-      logo,
-    } = req.body;
-
-    if (categoria && !CATEGORIAS_PERMITIDAS.includes(categoria)) {
-      return res.status(400).json({ error: "Categoría no válida" });
-    }
-
-    await tienda.update({
-      nombre: nombre || tienda.nombre,
-      categoria: categoria || tienda.categoria,
-      direccion: direccion || tienda.direccion,
-      descripcion: descripcion || tienda.descripcion,
-      whatsapp: whatsapp || tienda.whatsapp,
-      latitud: latitud || tienda.latitud,
-      longitud: longitud || tienda.longitud,
-      logo: logo || tienda.logo,
-    });
-
-    res.json(tienda);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "No se pudo actualizar la tienda" });
-  }
-}
-
-export async function eliminarTienda(req, res) {
-  try {
-    const tienda = await Tienda.findByPk(req.params.id);
-    if (!tienda) {
-      return res.status(404).json({ error: "Tienda no encontrada" });
-    }
-
-    if (req.user.rol !== "admin" && req.user.id !== tienda.usuarioId) {
-      return res
-        .status(403)
-        .json({ error: "No tienes permiso para eliminar esta tienda" });
-    }
-
-    await tienda.destroy();
-    res.json({ mensaje: "Tienda eliminada correctamente" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "No se pudo eliminar la tienda" });
-  }
-}
+export default router;
