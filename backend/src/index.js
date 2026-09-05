@@ -10,6 +10,7 @@ import perfilRoutes from "./routes/perfilRoutes.js";
 import tiendaRoutes from "./routes/tiendaRoutes.js";
 import productoRoutes from "./routes/productoRoutes.js";
 import categoriaRoutes from "./routes/categoriaRoutes.js";
+import usuarioRoutes from "./routes/usuarioRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,6 +31,7 @@ app.use("/api/perfiles", perfilRoutes);
 app.use("/api/tiendas", tiendaRoutes);
 app.use("/api/productos", productoRoutes);
 app.use("/api/categorias", categoriaRoutes);
+app.use("/api/usuarios", usuarioRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({ ok: true, mensaje: "SpotMarket API funcionando" });
