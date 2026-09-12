@@ -54,8 +54,7 @@ export async function iniciarSesion(req, res) {
       return res.status(401).json({ error: "Email o contraseña incorrectos" });
     }
 
-    const validPassword = await comparePassword(contrasena, usuario.contrasena);
-    if (!validPassword) {
+    if (usuario.contrasena !== contrasena) {
       return res.status(401).json({ error: "Email o contraseña incorrectos" });
     }
 
@@ -69,7 +68,7 @@ export async function iniciarSesion(req, res) {
     res.cookie("token", token, {
       httpOnly: true,
       secure: false,
-      sameSite: "strict",
+      sameSite: "lax",
       maxAge: 1000 * 60 * 60,
     });
 
@@ -81,7 +80,7 @@ export async function iniciarSesion(req, res) {
       mensaje: "Inicio de sesión exitoso",
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error en iniciarSesion:", error);
     res.status(500).json({ error: "No se pudo iniciar sesión" });
   }
 }

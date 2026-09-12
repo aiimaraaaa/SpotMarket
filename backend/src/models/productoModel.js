@@ -20,23 +20,6 @@ const Producto = conexion.define(
     categoria: {
       type: DataTypes.STRING(50),
       allowNull: false,
-      validate: {
-        isIn: [
-          [
-            "carnes",
-            "verduras",
-            "frutas",
-            "lacteos",
-            "panaderia",
-            "bebidas",
-            "infusiones",
-            "secos",
-            "conservas",
-            "huevos",
-            "almacen",
-          ],
-        ],
-      },
     },
     descripcion: {
       type: DataTypes.TEXT,
@@ -70,7 +53,6 @@ const Producto = conexion.define(
   {
     tableName: "productos",
     timestamps: true,
-    paranoid: true,
   },
 );
 

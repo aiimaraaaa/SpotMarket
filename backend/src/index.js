@@ -40,7 +40,7 @@ app.get("/api/health", (req, res) => {
 async function iniciarServidor() {
   try {
     await conexion.authenticate();
-    await conexion.sync({ alter: true });
+    await conexion.sync({ alter: false });
 
     app.listen(PUERTO, () => {
       console.log(`Servidor corriendo en el puerto ${PUERTO}`);

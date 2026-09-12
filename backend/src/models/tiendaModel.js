@@ -16,20 +16,6 @@ const Tienda = conexion.define(
     categoria: {
       type: DataTypes.STRING(50),
       allowNull: false,
-      validate: {
-        isIn: [
-          [
-            "carniceria",
-            "verduleria",
-            "fruteria",
-            "lacteos",
-            "panaderia",
-            "bebidas",
-            "infusiones",
-            "almacen",
-          ],
-        ],
-      },
     },
     direccion: {
       type: DataTypes.STRING(255),
