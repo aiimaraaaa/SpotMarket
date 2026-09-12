@@ -1,24 +1,78 @@
+// ============================================================
+// SUBIR PRODUCTO
+// ============================================================
+
+const userData = JSON.parse(localStorage.getItem("spotmarket_user") || "{}");
+
+// ============================================================
+// AVATAR Y MENÚ DESPLEGABLE
+// ============================================================
+
+const avatar = document.getElementById("avatarIniciales");
+const userNameDisplay = document.getElementById("userNameDisplay");
+if (avatar && userData.nombre) {
+  const iniciales = userData.nombre
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+  avatar.textContent = iniciales || "U";
+}
+if (userNameDisplay && userData.nombre) {
+  userNameDisplay.textContent = userData.nombre;
+}
+
+function toggleDropdown(event) {
+  event.stopPropagation();
+  const dropdown = document.getElementById("dropdownMenu");
+  if (dropdown) {
+    dropdown.classList.toggle("show");
+  }
+}
+
+document.addEventListener("click", function () {
+  const dropdown = document.getElementById("dropdownMenu");
+  if (dropdown) {
+    dropdown.classList.remove("show");
+  }
+});
+
+document
+  .getElementById("cerrarSesion")
+  ?.addEventListener("click", function (e) {
+    e.preventDefault();
+    localStorage.removeItem("spotmarket_sesion");
+    localStorage.removeItem("spotmarket_user");
+    window.location.href = "login.html";
+  });
+
+// ============================================================
+// CATEGORÍAS
+// ============================================================
 const CATEGORIA_LABEL = {
-  carnes: " Carnes",
-  verduras: " Verduras",
-  frutas: " Frutas",
-  lacteos: " Lácteos",
-  panaderia: " Panadería",
-  bebidas: " Bebidas",
-  infusiones: " Infusiones",
-  secos: " Secos y granos",
-  conservas: " Conservas",
-  huevos: " Huevos",
-  almacen: " Almacén",
+  carnes: "🥩 Carnes",
+  verduras: "🥦 Verduras",
+  frutas: "🍎 Frutas",
+  lacteos: "🥛 Lácteos",
+  panaderia: "🍞 Panadería",
+  bebidas: "🧃 Bebidas",
+  infusiones: "🧉 Infusiones",
+  secos: "🌾 Secos y granos",
+  conservas: "🥫 Conservas",
+  huevos: "🥚 Huevos",
+  almacen: "🛒 Almacén",
 };
 
+// ============================================================
+// CARGAR TIENDAS
+// ============================================================
 async function cargarTiendas() {
   const select = document.getElementById("tienda");
   if (!select) return;
 
   try {
     const tiendas = await apiFetch("/tiendas");
-
     if (tiendas.length === 0) {
       select.innerHTML =
         '<option value="">No hay comercios registrados todavía</option>';
@@ -37,6 +91,9 @@ async function cargarTiendas() {
   }
 }
 
+// ============================================================
+// VISTA PREVIA
+// ============================================================
 const previewImg = document.getElementById("previewImg");
 const previewNombre = document.getElementById("previewNombre");
 const previewCategoria = document.getElementById("previewCategoria");
@@ -63,6 +120,9 @@ document.getElementById("foto").addEventListener("change", async (e) => {
   }
 });
 
+// ============================================================
+// ENVÍO DEL FORMULARIO
+// ============================================================
 const form = document.getElementById("formProducto");
 const formMsg = document.getElementById("formMsg");
 
@@ -104,7 +164,7 @@ if (form) {
       });
 
       mostrarMensaje(
-        " ¡Producto publicado! Ya se ve en el catálogo.",
+        "✅ ¡Producto publicado! Ya se ve en el catálogo.",
         "success",
       );
       form.reset();
@@ -114,7 +174,7 @@ if (form) {
       previewPrecio.textContent = "$0";
 
       setTimeout(() => {
-        window.location.href = "index.html";
+        window.location.href = "comercio.html";
       }, 2000);
     } catch (error) {
       mostrarMensaje(error.message || "Error al publicar el producto", "error");
@@ -122,4 +182,7 @@ if (form) {
   });
 }
 
+// ============================================================
+// INICIALIZAR
+// ============================================================
 cargarTiendas();

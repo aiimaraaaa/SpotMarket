@@ -51,7 +51,7 @@ if (loginForm) {
             window.location.href = "comercio.html";
             break;
           default:
-            window.location.href = "index.html";
+            window.location.href = "clietne.hmtl";
         }
       }, 1500);
     } catch (error) {

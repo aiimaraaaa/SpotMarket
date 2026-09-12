@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpotMarket — Cliente</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/cliente.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="cliente.html" class="brand">
+          <span class="brand__mark">SpotMarket</span>
+          <span class="brand__tag">Cliente</span>
+        </a>
+        <nav class="nav">
+          <a href="cliente.html" class="is-active">Inicio</a>
+          <a href="mapa.html">Mapa</a>
+          <div class="avatar-dropdown" onclick="toggleDropdown(event)">
+            <div class="avatar-circle" id="avatarIniciales">U</div>
+            <div class="dropdown-menu-custom" id="dropdownMenu">
+              <div class="user-name" id="userNameDisplay">Usuario</div>
+              <div class="divider"></div>
+              <a href="#" id="cerrarSesion">🚪 Cerrar sesión</a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Bienvenido, <span id="nombreCliente"></span></h1>
+      <p>Explorá el catálogo de productos y encontrá los mejores precios.</p>
+
+      <div class="catalog-header">
+        <h2>Catálogo</h2>
+        <p>Filtrá por categoría, precio o buscá por nombre.</p>
+      </div>
+
+      <form class="filters" id="filtersForm">
+        <div class="filters__row">
+          <input
+            type="search"
+            id="filtroBusqueda"
+            class="filters__search"
+            placeholder="Buscar un producto…"
+          />
+          <select id="filtroOrden">
+            <option value="recientes">Más recientes</option>
+            <option value="precio_asc">Precio: menor a mayor</option>
+            <option value="precio_desc">Precio: mayor a menor</option>
+            <option value="gustados">Más gustados</option>
+          </select>
+        </div>
+        <div class="filters__row filters__row--precios">
+          <input
+            type="number"
+            id="filtroPrecioMin"
+            placeholder="Precio mín."
+            min="0"
+          />
+          <span>—</span>
+          <input
+            type="number"
+            id="filtroPrecioMax"
+            placeholder="Precio máx."
+            min="0"
+          />
+        </div>
+        <div class="chips" id="categoriaChips"></div>
+      </form>
+
+      <p id="catalogEstado" class="catalog-estado"></p>
+      <div class="product-grid" id="productGrid"></div>
+
+      <!-- Modal -->
+      <div class="modal-overlay" id="modalOverlay">
+        <div
+          class="modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modalNombre"
+        >
+          <button class="modal__close" id="modalCerrar" aria-label="Cerrar">
+            ✕
+          </button>
+          <img id="modalImagen" class="modal__img" alt="" />
+          <div class="modal__body">
+            <p class="modal__categoria" id="modalCategoria"></p>
+            <h3 id="modalNombre"></h3>
+            <p class="modal__precio" id="modalPrecio"></p>
+            <p id="modalDescripcion"></p>
+            <p class="modal__tienda">
+              Vendido por <strong id="modalTienda"></strong> ·
+              <span id="modalDireccion"></span>
+            </p>
+            <div class="modal__votos">
+              <button id="modalLike" class="btn btn--ghost">
+                👍 <span id="modalLikeCount">0</span>
+              </button>
+              <button id="modalDislike" class="btn btn--ghost">
+                👎 <span id="modalDislikeCount">0</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <span>SpotMarket · Formosa Capital</span>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/cliente.js"></script>
+  </body>
+</html>
